@@ -1,0 +1,7 @@
+login_homepage:
+    path:     /
+    defaults: { _controller: loginBundle:login:index }
+
+login_auth:
+    path:     /authentification
+    defaults: { _controller: loginBundle:login:test }
