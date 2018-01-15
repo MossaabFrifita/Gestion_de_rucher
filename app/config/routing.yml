@@ -1,3 +1,7 @@
+ruche:
+    resource: "@RucheBundle/Resources/config/routing.yml"
+    prefix:   /
+
 login:
     resource: "@loginBundle/Resources/config/routing.yml"
     prefix:   /

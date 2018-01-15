@@ -1,0 +1,185 @@
+
+
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+  <meta charset="UTF-8">
+  <title>Gestion de Rucher</title>
+  
+  
+  <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'>
+<link rel='stylesheet prefetch' href='https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css'>
+<link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
+      <link rel="stylesheet" href="{{ asset('css/styleFront.css') }}">
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  
+</head>
+
+<body>
+
+<ul>
+  <li><a href="">Accueil </a></li>
+
+</ul>
+
+
+
+  <div class="container" ng-app="formvalid">
+  <div class="panel" data-ng-controller="validationCtrl">
+  <div class="panel-heading border">    
+
+       <p> <center><h4>LISTE DE RUCHER
+                           </h4>
+						   
+						   </center>	
+ <button  type="button" class="btn btn-danger" id="btnAddRuche" >Add ruche</button></p></br>
+  </div>
+
+
+  
+  <div class="panel-body">
+      <table class="table table-bordered bordered table-striped table-condensed datatable" ui-jq="dataTable" ui-options="dataTableOpt" id="myTable">
+      <thead>
+        <tr>
+        
+          <th>Name</th>
+          <th>Position</th>
+          <th>Actions</th>
+
+        </tr>
+      </thead>
+        <tbody>
+        
+		{% for liste in listeRuche %}	  
+		  <tr>
+            <td>{{ liste.getNomRuche }}</td>
+            <td>{{ liste.getPosition }}</td>
+            <td><center>
+			<button class="fa fa-trash-o" aria-hidden="true"></button>
+			<button class="fa fa-info-circle" aria-hidden="true" onclick="showIntervention({{ liste.getId }})" ></button>
+			</center></td>	
+          </tr>
+		  
+		  {% endfor %}
+        </tbody>
+    </table>
+  </div>
+</div>
+</div>
+  
+    
+
+<script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.0.0/ui-bootstrap-tpls.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/angular-ui-utils/0.1.1/angular-ui-utils.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/js/jquery.dataTables.min.js'></script>
+<script src='https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js'></script>
+
+
+    <script   src="{{ asset('js/indexFront.js') }}"></script>
+<div class="modal" tabindex="-1" role="dialog" id="myModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        Modal title
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+         <table class="table table-bordered bordered table-striped table-condensed datatable" ui-jq="dataTable" ui-options="dataTableOpt" id="myTable2">
+      <thead>
+        <tr>
+        
+          <th>Name</th>
+          <th>Position</th>
+          
+
+        </tr>
+      </thead>
+        <tbody>
+          <tr>
+            <td>Ruche alsacienne </td>
+            <td>Saint-Quentin</td>
+           
+          </tr>
+	 <tr>
+            <td>Ruche alsacienne </td>
+            <td>Saint-Quentin</td>
+           
+          </tr>
+		   <tr>
+            <td>Ruche alsacienne </td>
+            <td>Saint-Quentin</td>
+           
+          </tr>
+        </tbody>
+    </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="addinterv">Add intervenation</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal" tabindex="-1" role="dialog" id="myModal2">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        Modal title
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+     <p>sdsdsd</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" >Enregistrer</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Fermer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" tabindex="-1" role="dialog" id="addRuche">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+      <strong>  Ajout d'un nouveau Rucher</strong>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+	  
+     <div >
+      
+      <input type="text" class="form-control" placeholder="Nom">  </div>
+	  <div > </br>
+	  <input type="text" class="form-control" placeholder="Position"></div>
+  
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" id="addinterv">Enregistrer</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Fermer</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script   src="{{ asset('js/GererListeRuche.js') }}"></script>
+
+
+
+
+</body>
+
+</html>

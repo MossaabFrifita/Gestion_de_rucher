@@ -24,9 +24,11 @@ class loginController extends Controller
             $user = $repository->findOneBy(array('login'=>$user,'password'=>$password));
 			
 			if($user){
-
-				return $this->render('loginBundle:login:test.html.twig',array('res'=>'true'));
-	
+               
+				
+				//return $this->render('RucheBundle:Default:index.html.twig',array('res'=>'true'));
+				return $this->redirect($this->generateUrl('ruche_homepage',array('id'=>$user->getId())));
+	           
 			}
 
 			else {

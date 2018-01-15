@@ -1,0 +1,3 @@
+ruche_homepage:
+    path:     /acc/{id}
+    defaults: { _controller: RucheBundle:Default:index }

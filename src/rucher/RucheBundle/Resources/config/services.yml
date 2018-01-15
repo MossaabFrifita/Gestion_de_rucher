@@ -1,0 +1,4 @@
+services:
+#    ruche.example:
+#        class: rucher\RucheBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]
