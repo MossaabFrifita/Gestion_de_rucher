@@ -1,3 +1,7 @@
 ruche_homepage:
-    path:     /acc/{id}
+    path:     /home/{id}
     defaults: { _controller: RucheBundle:Default:index }
+
+add_ruche:
+    path:     /home
+    defaults: {_controller: RucheBundle:AjoutRuche:index }

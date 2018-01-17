@@ -52,7 +52,7 @@
 
         </tr>
       </thead>
-        <tbody>
+        <tbody id="rucheTab">
         
 		{% for liste in listeRuche %}	  
 		  <tr>
@@ -71,11 +71,8 @@
 </div>
 </div>
   
-    
 
-<script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular.min.js'></script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.0.0/ui-bootstrap-tpls.min.js'></script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/angular-ui-utils/0.1.1/angular-ui-utils.min.js'></script>
+
 <script src='https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/js/jquery.dataTables.min.js'></script>
 <script src='https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js'></script>
 
@@ -154,31 +151,87 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-      <strong>  Ajout d'un nouveau Rucher</strong>
+      <strong>  Ajout d'une nouvelle ruche</strong>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-	  
+  <div class="modal-body">
+
      <div >
       
-      <input type="text" class="form-control" placeholder="Nom">  </div>
-	  <div > </br>
-	  <input type="text" class="form-control" placeholder="Position"></div>
-  
+      <input type="text" class="form-control" placeholder="Nom" id="NomRuche">  </div>
+	  <div> </br>
+	  <input type="text" class="form-control" placeholder="Position" id="PosRuche"></div>
+   
+
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-success" id="addinterv">Enregistrer</button>
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Fermer</button>
+        <button type="submit" class="btn btn-success" id="BtnAddRuche">Enregistrer</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" id ="btnCloseAddRuche">Fermer</button>
       </div>
     </div>
   </div>
 </div>
 <script   src="{{ asset('js/GererListeRuche.js') }}"></script>
+<script   src="{{ asset('js/notify.js') }}"></script>
+
+<script type="text/javascript">
+    $("#BtnAddRuche").on( "click", function() {
+
+   $("#NomRuche").css({'background-color' : 'white'});
+   $("#PosRuche").css({'background-color' : 'white'});
+var nomRuche = $("#NomRuche").val();
+var PosRuche = $("#PosRuche").val();
+ if (nomRuche == "" && PosRuche == ""){
+   $("#NomRuche").css({'background-color' : '#d9534f'});
+   $("#PosRuche").css({'background-color' : '#d9534f'});
+}
+else if(nomRuche == ""){
+ $("#NomRuche").css({'background-color' : '#d9534f'});
+}
+else if(PosRuche == "")
+$("#PosRuche").css({'background-color' : '#d9534f'});
+else{
 
 
+var idApiculteur = "{{ idApiculteur }}"
+      
+    $.ajax({
+        type: "POST",
+        url: "{{ path('add_ruche')}}",
+        cache: false,
+        global: false,
+        data: {'nomRuche': nomRuche, 'PosRuche': PosRuche, 'idApiculteur': idApiculteur},
+       
+        success: function(data){
 
+    
+
+ location.reload();
+$('#addRuche').modal('hide'); 
+    
+
+     $.notify("la ruche a été ajoutée avec succès", "success");
+
+
+        }
+    }); 
+
+
+       
+}// end of else
+
+
+});
+</script>
+<script>// script pour fermer le modal ajouter une ruche
+$("#btnCloseAddRuche").on("click", function(){
+
+$.notify("l'ajout a été annulé", "info");
+});
+
+</script> 
 
 </body>
 

@@ -15,7 +15,7 @@ class DefaultController extends Controller
         
         
         
-        return $this->render('RucheBundle:Default:index.html.twig', array('listeRuche' => $listeRuche));
+        return $this->render('RucheBundle:Default:index.html.twig', array('listeRuche' => $listeRuche,'idApiculteur' => $idApi));
         
        
     }

@@ -20,6 +20,7 @@ class AppKernel extends Kernel
             new rucher\loginBundle\loginBundle(),
 
             new rucher\RucheBundle\RucheBundle(),
+    
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
