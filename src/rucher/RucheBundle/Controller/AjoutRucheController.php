@@ -18,7 +18,7 @@ $request = $this->getRequest();
 
 		
 		if($request->isXmlHttpRequest()){
-	//return $this->redirect($this->generateUrl('ruche_homepage'));		
+	
 		$em = $this->getDoctrine()->getEntityManager();
 
 		

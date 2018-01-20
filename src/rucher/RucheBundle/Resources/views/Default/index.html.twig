@@ -16,7 +16,19 @@
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  
+  <style type="text/css">
+
+/* Important part */
+#modal-dialogInterv{
+    overflow-y: initial !important
+}
+#modal-bodyInterv{
+    height: 450px;
+
+    overflow-y: auto;
+}
+
+  </style>
 </head>
 
 <body>
@@ -77,49 +89,37 @@
 <script src='https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js'></script>
 
 
-    <script   src="{{ asset('js/indexFront.js') }}"></script>
+    
 <div class="modal" tabindex="-1" role="dialog" id="myModal">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog" role="document" id="modal-dialogInterv">
     <div class="modal-content">
       <div class="modal-header">
-        Modal title
+        <strong>Interventions de la ruche</strong>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-         <table class="table table-bordered bordered table-striped table-condensed datatable" ui-jq="dataTable" ui-options="dataTableOpt" id="myTable2">
+      <div class="modal-body" id="modal-bodyInterv">
+        <div><button  type="button" class="btn btn-success" id="btnProduction" >Production</button> </div></br></br>
+         <table class="table table-bordered bordered table-striped table-condensed datatable" ui-jq="dataTable" ui-options="dataTableOpt" id="myTable2" >
       <thead>
-        <tr>
+        <tr ">
         
-          <th>Name</th>
-          <th>Position</th>
+          <th>Intervention</th>
+          <th>Date</th>
           
 
         </tr>
       </thead>
         <tbody>
-          <tr>
-            <td>Ruche alsacienne </td>
-            <td>Saint-Quentin</td>
-           
-          </tr>
-	 <tr>
-            <td>Ruche alsacienne </td>
-            <td>Saint-Quentin</td>
-           
-          </tr>
-		   <tr>
-            <td>Ruche alsacienne </td>
-            <td>Saint-Quentin</td>
-           
-          </tr>
+     
+          
         </tbody>
     </table>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" id="addinterv">Add intervenation</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" id ="BtnCShowRuche">Close</button>
       </div>
     </div>
   </div>
@@ -173,6 +173,7 @@
     </div>
   </div>
 </div>
+<script   src="{{ asset('js/indexFront.js') }}"></script>
 <script   src="{{ asset('js/GererListeRuche.js') }}"></script>
 <script   src="{{ asset('js/notify.js') }}"></script>
 
@@ -226,12 +227,103 @@ $('#addRuche').modal('hide');
 });
 </script>
 <script>// script pour fermer le modal ajouter une ruche
+
 $("#btnCloseAddRuche").on("click", function(){
 
 $.notify("l'ajout a été annulé", "info");
 });
 
+
+function format_date(date) { // function to convert timesstamp date to dateTime 
+
+  month=date.getMonth();
+  month=month+1; //javascript date goes from 0 to 11
+  if (month<10) month="0"+month; //adding the prefix
+
+  year=date.getFullYear();
+  day=date.getDate();
+  hour=date.getHours();
+  minutes=date.getMinutes();
+  seconds=date.getSeconds();
+  hour = hour-1; // heure de france 
+  return day+"/"+month+"/"+year+" "+hour+":"+minutes+":"+seconds;
+
+}
+
+
+
+// script pour afficher une intevention
+
+
+function showIntervention(idRuche){
+
+
+
+  
+
+
+
+
+
+ console.log(idRuche);
+ var table4 = $('#myTable2').DataTable({
+  "ordering": false
+});
+ //$('#myTable2').DataTable();
+
+
+      $.ajax({
+        type: "POST",
+        url: "{{ path('show_ruche')}}",
+        cache: false,
+        global: false,
+        dataType:"json",
+        async: true,
+        data: {'IdRuche': idRuche},
+       
+        success: function(data){
+          console.log(data);
+
+if (data.length >= 1){ 
+
+for (var i=0; i<data.length; i++) {
+
+  timestamp = data[i].date.timestamp;
+var jsDate = new Date(timestamp*1000);
+
+       table4.rows.add(
+       [[ data[i].contenu, format_date(jsDate) ],]
+    ).draw();
+    
+}// end of for
+}
+
+
+
+$('#myModal').modal('show');
+
+
+        }// end of success
+    }); 
+
+  
+}// end of function
+
+
+$("#BtnCShowRuche").on("click", function(){
+
+
+   var table4 = $('#myTable2').DataTable();
+
+   table4.destroy();
+   $('#myTable2 tbody').empty();
+
+   
+});
+
 </script> 
+
+
 
 </body>
 

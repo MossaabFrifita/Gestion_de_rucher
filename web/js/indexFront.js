@@ -1,4 +1,4 @@
 
 
  $('#myTable').DataTable();
- $('#myTable2').DataTable();
+ //$('#myTable2').DataTable();

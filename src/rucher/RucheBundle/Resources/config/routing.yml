@@ -5,3 +5,16 @@ ruche_homepage:
 add_ruche:
     path:     /home
     defaults: {_controller: RucheBundle:AjoutRuche:index }
+
+show_ruche:
+    path:     /ruche
+    defaults: {_controller: RucheBundle:AfficherRuche:index }
+test_ruche:
+    path:     /test
+    defaults: {_controller: RucheBundle:Test:index }
+
+add_Intervention:
+    path:     /addInterv
+    defaults: {_controller: RucheBundle:AddInterv:index }
+
+

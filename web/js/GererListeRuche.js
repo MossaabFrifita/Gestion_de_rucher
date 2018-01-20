@@ -12,10 +12,10 @@ $("#btnAddRuche").on( "click", function() {
 
 });
 
-function showIntervention(idRuche){
-	$('#myModal').modal('show');
-	
-}
+
+
+
+
 
 
    

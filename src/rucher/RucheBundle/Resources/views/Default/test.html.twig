@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>test</title>
+</head>
+<body>
+	
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<button onclick="show()">Click me</button>
+
+
+<script type="text/javascript">
+	
+function format_date(date) { // function to convert timesstamp date to dateTime 
+
+  month=date.getMonth();
+  month=month+1; //javascript date goes from 0 to 11
+  if (month<10) month="0"+month; //adding the prefix
+
+  year=date.getFullYear();
+  day=date.getDate();
+  hour=date.getHours();
+  minutes=date.getMinutes();
+  seconds=date.getSeconds();
+  hour = hour-1; // heure de france 
+  return day+"/"+month+"/"+year+" "+hour+":"+minutes+":"+seconds;
+
+}
+
+function show(){
+  
+
+      $.ajax({
+        type: "POST",
+        url: "{{ path('show_ruche')}}",
+        cache: false,
+        global: false,
+       dataType:"json",
+       // data: {'IdRuche': idRuche},
+       
+        success: function(data){
+
+
+
+    console.log(data[1].contenu);
+   
+
+  
+
+timestamp = data[1].date.timestamp;
+var jsDate = new Date(timestamp*1000);
+
+console.log(format_date(jsDate));
+
+
+        }
+    }); 
+
+
+
+  
+}// end of function
+
+
+
+
+
+</script>
+
+
+</body>
+</html>

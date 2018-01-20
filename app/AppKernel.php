@@ -20,6 +20,7 @@ class AppKernel extends Kernel
             new rucher\loginBundle\loginBundle(),
 
             new rucher\RucheBundle\RucheBundle(),
+            new JMS\SerializerBundle\JMSSerializerBundle(),
     
         );
 
