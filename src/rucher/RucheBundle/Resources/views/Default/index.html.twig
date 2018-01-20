@@ -1,22 +1,36 @@
-
-
-<!DOCTYPE html>
-<html lang="en" >
-
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <meta charset="UTF-8">
-  <title>Gestion de Rucher</title>
-  
-  
-  <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>GESTION RUCHER | Powered by INFOKING</title>
+<link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'>
 <link rel='stylesheet prefetch' href='https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css'>
 <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
-      <link rel="stylesheet" href="{{ asset('css/styleFront.css') }}">
+
+
+
+
+<link rel="stylesheet" href="{{ asset('css/styleFront.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('css/stylePanel.css') }}" />
 
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <style type="text/css">
+
+
+<script type="text/javascript" src="{{ asset('js/clockp.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/clockh.js') }}"></script> 
+
+
+<script type="text/javascript" src="{{ asset('js/jconfirmaction.jquery.js') }}"></script>
+
+
+
+
+
+<!-- CSS STYLE OF TABLE RUCHE -->
+
+<style type="text/css">
 
 /* Important part */
 #modal-dialogInterv{
@@ -29,67 +43,116 @@
 }
 
   </style>
+
+<!--  END OF CSS STYLE OF TABLE RUCHE -->
+
+
+
 </head>
-
 <body>
+<div id="main_container">
 
-<ul>
-  <li><a href="">Accueil </a></li>
+	<div class="header">
 
-</ul>
+    <div class="logo"><a href="#"><img src="{{ asset('css/images/') }}" alt="" title="" border="0" /></a></div>
+    
+    <div class="right_header">Bienveunu Apiculteur, <a href="#">Visit site</a> |  <a href="#" class="logout">Déconnexion</a></div>
+    <div id="clock_a"></div>
+    </div>
+    
+    <div class="main_content">
+    
+                    <div class="menu">
+                    <ul>
+                    <li><a class="current" href="">Apiculteur Home</a></li>
+                    
+                    </ul>
+                    </div> 
+                    
+                    
+                    
+                    
+    <div class="center_content">  
+    
+    
+    
+    <div class="left_content">
+    
+    	
+    
+            <div class="sidebarmenu">
+            
+             
+           
+              
+                <a class="menuitem"  id="btnAddRuche">Add Ruche</a>
+                
+                <a class="menuitem_green" href="">Option 1</a>
+                
+                <a class="menuitem_red" href="">Option 2</a>
+                    
+            </div>
+            
+   
+            
 
-
-
-  <div class="container" ng-app="formvalid">
-  <div class="panel" data-ng-controller="validationCtrl">
-  <div class="panel-heading border">    
-
-       <p> <center><h4>LISTE DE RUCHER
-                           </h4>
-						   
-						   </center>	
- <button  type="button" class="btn btn-danger" id="btnAddRuche" >Add ruche</button></p></br>
-  </div>
-
-
-  
-  <div class="panel-body">
-      <table class="table table-bordered bordered table-striped table-condensed datatable" ui-jq="dataTable" ui-options="dataTableOpt" id="myTable">
-      <thead>
-        <tr>
+   
+    
+    </div>  
+    
+    <div class="right_content">            
         
-          <th>Name</th>
-          <th>Position</th>
-          <th>Actions</th>
-
+    <h2> Liste de ruches</h2> 
+                    
+                    
+ <table class="table table-bordered bordered table-striped table-condensed datatable" ui-jq="dataTable" ui-options="dataTableOpt" id="myTable">
+    <thead>
+    	<tr>
+            <th scope="col" class="rounded">Nom de la ruche</th>
+            <th scope="col" class="rounded">Position</th>
+            <th scope="col" class="rounded">Actions</th>
+          
         </tr>
-      </thead>
-        <tbody id="rucheTab">
-        
-		{% for liste in listeRuche %}	  
-		  <tr>
+    </thead>
+ 
+    <tbody id="rucheTab">
+
+         {% for liste in listeRuche %}     
+          <tr>
             <td>{{ liste.getNomRuche }}</td>
             <td>{{ liste.getPosition }}</td>
             <td><center>
-			<button class="fa fa-trash-o" aria-hidden="true"></button>
-			<button class="fa fa-info-circle" aria-hidden="true" onclick="showIntervention({{ liste.getId }})" ></button>
-			</center></td>	
+            <button class="fa fa-trash-o" aria-hidden="true"></button>
+            <button class="fa fa-info-circle" aria-hidden="true" onclick="showIntervention({{ liste.getId }})" ></button>
+            </center></td>  
           </tr>
-		  
-		  {% endfor %}
-        </tbody>
-    </table>
-  </div>
-</div>
-</div>
-  
+          
+          {% endfor %}
+    
+        
+    </tbody>
+</table>
 
-
+   
+      
+     
+     </div><!-- end of right content-->
+            
+                    
+  </div>   <!--end of center content -->               
+                    
+                    
+    
+    
+    <div class="clear"></div>
+    </div> <!--end of main content-->
+	
 <script src='https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/js/jquery.dataTables.min.js'></script>
 <script src='https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js'></script>
 
 
-    
+<!--  Modal liste des interventions -->
+
 <div class="modal" tabindex="-1" role="dialog" id="myModal">
   <div class="modal-dialog" role="document" id="modal-dialogInterv">
     <div class="modal-content">
@@ -125,23 +188,27 @@
   </div>
 </div>
 
+<!-- FIN Modal liste des interventions -->
 
 
-<div class="modal" tabindex="-1" role="dialog" id="myModal2">
+<!--  Modal Ajouter intervention -->
+
+
+<div class="modal" tabindex="-1" role="dialog" id="AddIntervModal">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        Modal title
+       <strong>Ajouter une nouvelle intervention pour cette ruche</strong>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-     <p>sdsdsd</p>
+      <div class="modal-body">  
+     <textarea name="inputIntervention" cols="90" rows="13"></textarea>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-success" >Enregistrer</button>
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Fermer</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" id="CloseAddinterv">Fermer</button>
       </div>
     </div>
   </div>
@@ -161,8 +228,8 @@
      <div >
       
       <input type="text" class="form-control" placeholder="Nom" id="NomRuche">  </div>
-	  <div> </br>
-	  <input type="text" class="form-control" placeholder="Position" id="PosRuche"></div>
+      <div> </br>
+      <input type="text" class="form-control" placeholder="Position" id="PosRuche"></div>
    
 
       </div>
@@ -173,9 +240,23 @@
     </div>
   </div>
 </div>
+
+<!-- FIN Modal Ajouter intervention -->
+
+
+
+<!-- Imports des scripts  -->
+
 <script   src="{{ asset('js/indexFront.js') }}"></script>
 <script   src="{{ asset('js/GererListeRuche.js') }}"></script>
 <script   src="{{ asset('js/notify.js') }}"></script>
+
+
+<!--  Fin Imports des scripts  -->
+
+
+
+<!-- JAVA SCRIPTS -->
 
 <script type="text/javascript">
     $("#BtnAddRuche").on( "click", function() {
@@ -321,10 +402,47 @@ $("#BtnCShowRuche").on("click", function(){
    
 });
 
+
+
+
+ $("#addinterv").on( "click", function() {
+  $('#myModal').modal('hide');
+  $('#AddIntervModal').modal('show'); 
+
+
+});
+
+ $("#CloseAddinterv").on( "click", function() {
+
+
+  $('#AddIntervModal').modal('hide'); 
+
+
+  $('#myModal').modal('show');
+
+
+});
+
+
 </script> 
 
 
 
-</body>
 
+
+
+
+
+
+
+
+    <div class="footer">
+    
+    	<div class="left_footer">GESTION RUCHER | Powered by <a href="http://indeziner.com">MOSSAAB FRIFITA</a></div>
+    	<div class="right_footer"><a href="http://indeziner.com"><img src="images/indeziner_logo.gif" alt="" title="" border="0" /></a></div>
+    
+    </div>
+
+</div>		
+</body>
 </html>

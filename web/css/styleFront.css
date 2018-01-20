@@ -5,12 +5,14 @@ table tr th{
   vertical-align:center;
 }
 
-ul {
+/*ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #333;
+    background-color: #33b5e5;
+    margin-right: 98px;
+    margin-left: 98px;
 }
 
 li {
@@ -25,7 +27,14 @@ li a {
     text-decoration: none;
 }
 
-/* Change the link color to #111 (black) on hover */
+/* Change the link color to #111 (black) on hover 
 li a:hover {
     background-color: #111;
+} 
+*/
+
+#user {
+
+  color: white;
+  margin-left: 40px;
 }
