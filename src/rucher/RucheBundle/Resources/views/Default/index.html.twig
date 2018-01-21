@@ -49,14 +49,14 @@
 
 
 </head>
-<body>
+<body >
 <div id="main_container">
 
 	<div class="header">
 
-    <div class="logo"><a href="#"><img src="{{ asset('css/images/') }}" alt="" title="" border="0" /></a></div>
+   
     
-    <div class="right_header">Bienveunu Apiculteur, <a href="#">Visit site</a> |  <a href="#" class="logout">Déconnexion</a></div>
+    <div class="right_header">Bienveunu Apiculteur  |  <a href="#" class="logout">Déconnexion</a></div>
     <div id="clock_a"></div>
     </div>
     
@@ -204,10 +204,10 @@
         </button>
       </div>
       <div class="modal-body">  
-     <textarea name="inputIntervention" cols="90" rows="13"></textarea>
+     <textarea id="inputIntervention" cols="90" rows="13"></textarea>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-success" >Enregistrer</button>
+        <button type="button" class="btn btn-success" id="btnSaveIntervention" >Enregistrer</button>
         <button type="button" class="btn btn-danger" data-dismiss="modal" id="CloseAddinterv">Fermer</button>
       </div>
     </div>
@@ -250,6 +250,8 @@
 <script   src="{{ asset('js/indexFront.js') }}"></script>
 <script   src="{{ asset('js/GererListeRuche.js') }}"></script>
 <script   src="{{ asset('js/notify.js') }}"></script>
+<!--<script   src="{{ asset('js/loading.js') }}"></script> -->
+
 
 
 <!--  Fin Imports des scripts  -->
@@ -326,31 +328,32 @@ function format_date(date) { // function to convert timesstamp date to dateTime
   hour=date.getHours();
   minutes=date.getMinutes();
   seconds=date.getSeconds();
-  hour = hour-1; // heure de france 
   return day+"/"+month+"/"+year+" "+hour+":"+minutes+":"+seconds;
 
 }
 
 
 
+
+
+
+
 // script pour afficher une intevention
 
 
+var globalIdRuche="";
+
 function showIntervention(idRuche){
 
-
+     var table4 = $('#myTable2').DataTable({
+  "ordering": false
+  });
 
   
+globalIdRuche = idRuche; 
 
 
 
-
-
- console.log(idRuche);
- var table4 = $('#myTable2').DataTable({
-  "ordering": false
-});
- //$('#myTable2').DataTable();
 
 
       $.ajax({
@@ -363,65 +366,82 @@ function showIntervention(idRuche){
         data: {'IdRuche': idRuche},
        
         success: function(data){
-          console.log(data);
+        
 
-if (data.length >= 1){ 
+              if (data.length >= 1){ 
 
-for (var i=0; i<data.length; i++) {
+                  for (var i=0; i<data.length; i++) {
 
-  timestamp = data[i].date.timestamp;
-var jsDate = new Date(timestamp*1000);
+                      timestamp = data[i].date.timestamp;
+                      var jsDate = new Date(timestamp*1000);
 
-       table4.rows.add(
-       [[ data[i].contenu, format_date(jsDate) ],]
-    ).draw();
-    
-}// end of for
-}
+                             table4.rows.add(
+                             [[ data[i].contenu, format_date(jsDate) ],]
+                          ).draw();
+                          
+                  }
+              }
+        $('#myModal').modal('show');
 
-
-
-$('#myModal').modal('show');
-
-
-        }// end of success
+        }
     }); 
-
-  
 }// end of function
 
 
 $("#BtnCShowRuche").on("click", function(){
-
-
    var table4 = $('#myTable2').DataTable();
-
    table4.destroy();
-   $('#myTable2 tbody').empty();
-
-   
+   $('#myTable2 tbody').empty();   
 });
 
 
 
 
- $("#addinterv").on( "click", function() {
+$("#addinterv").on( "click", function() {
   $('#myModal').modal('hide');
   $('#AddIntervModal').modal('show'); 
-
-
 });
+
 
  $("#CloseAddinterv").on( "click", function() {
+    $('#AddIntervModal').modal('hide'); 
+    $('#myModal').modal('show');
+});
 
 
-  $('#AddIntervModal').modal('hide'); 
 
+$("#btnSaveIntervention").on("click", function(){
 
-  $('#myModal').modal('show');
+var contenu = $("#inputIntervention").val();
 
+      
+    $.ajax({
+        type: "POST",
+        url: "{{ path('add_Intervention')}}",
+        cache: false,
+        global: false,
+        data: {'idRuche': globalIdRuche, 'contenu': contenu,},
+       
+            success: function(data){
+
+                $.notify("l'intervention' a été ajoutée avec succès", "success");
+
+                $("#inputIntervention").val('');
+
+                $('#AddIntervModal').modal('hide'); 
+
+                $('#myTable2').DataTable().destroy();;
+
+                $('#myTable2 tbody').empty();
+
+                showIntervention(globalIdRuche);
+
+        }
+    }); 
 
 });
+
+
 
 
 </script> 
@@ -439,7 +459,7 @@ $("#BtnCShowRuche").on("click", function(){
     <div class="footer">
     
     	<div class="left_footer">GESTION RUCHER | Powered by <a href="http://indeziner.com">MOSSAAB FRIFITA</a></div>
-    	<div class="right_footer"><a href="http://indeziner.com"><img src="images/indeziner_logo.gif" alt="" title="" border="0" /></a></div>
+    
     
     </div>
 
