@@ -9,12 +9,17 @@ add_ruche:
 show_ruche:
     path:     /ruche
     defaults: {_controller: RucheBundle:AfficherRuche:index }
-test_ruche:
-    path:     /test
-    defaults: {_controller: RucheBundle:Test:index }
 
 add_Intervention:
     path:     /addInterv
     defaults: {_controller: RucheBundle:AddInterv:index }
+
+delete_Ruche:
+    path:     /deleteRuche
+    defaults: {_controller: RucheBundle:DeleteRuche:index }
+
+liste_Ruche:
+    path:     /listRuches
+    defaults: {_controller: RucheBundle:ListeRuches:index }
 
 

@@ -21,8 +21,10 @@
 <script type="text/javascript" src="{{ asset('js/clockp.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/clockh.js') }}"></script> 
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
 
-<script type="text/javascript" src="{{ asset('js/jconfirmaction.jquery.js') }}"></script>
+
 
 
 
@@ -85,7 +87,7 @@
              
            
               
-                <a class="menuitem"  id="btnAddRuche">Add Ruche</a>
+                <a class="menuitem" href="#" id="btnAddRuche">Add Ruche</a>
                 
                 <a class="menuitem_green" href="">Option 1</a>
                 
@@ -122,7 +124,7 @@
             <td>{{ liste.getNomRuche }}</td>
             <td>{{ liste.getPosition }}</td>
             <td><center>
-            <button class="fa fa-trash-o" aria-hidden="true"></button>
+            <button class="fa fa-trash-o" aria-hidden="true" onclick="deleteRuche({{ liste.getId }})"></button>
             <button class="fa fa-info-circle" aria-hidden="true" onclick="showIntervention({{ liste.getId }})" ></button>
             </center></td>  
           </tr>
@@ -247,8 +249,8 @@
 
 <!-- Imports des scripts  -->
 
-<script   src="{{ asset('js/indexFront.js') }}"></script>
-<script   src="{{ asset('js/GererListeRuche.js') }}"></script>
+
+
 <script   src="{{ asset('js/notify.js') }}"></script>
 <!--<script   src="{{ asset('js/loading.js') }}"></script> -->
 
@@ -261,21 +263,34 @@
 <!-- JAVA SCRIPTS -->
 
 <script type="text/javascript">
+  
+ $('#myTable').DataTable({
+  "ordering": false
+ });
+
+ $("#btnAddRuche").on( "click", function() {
+  $('#addRuche').modal('show'); 
+
+});
+
+</script>
+
+<script type="text/javascript">
     $("#BtnAddRuche").on( "click", function() {
 
-   $("#NomRuche").css({'background-color' : 'white'});
-   $("#PosRuche").css({'background-color' : 'white'});
+   $("#NomRuche").css({'border-color' : 'white'});
+   $("#PosRuche").css({'border-color' : 'white'});
 var nomRuche = $("#NomRuche").val();
 var PosRuche = $("#PosRuche").val();
  if (nomRuche == "" && PosRuche == ""){
-   $("#NomRuche").css({'background-color' : '#d9534f'});
-   $("#PosRuche").css({'background-color' : '#d9534f'});
+   $("#NomRuche").css({'border-color' : '#d9534f'});
+   $("#PosRuche").css({'border-color' : '#d9534f'});
 }
 else if(nomRuche == ""){
- $("#NomRuche").css({'background-color' : '#d9534f'});
+ $("#NomRuche").css({'border-color' : '#d9534f'});
 }
 else if(PosRuche == "")
-$("#PosRuche").css({'background-color' : '#d9534f'});
+$("#PosRuche").css({'border-color' : '#d9534f'});
 else{
 
 
@@ -292,7 +307,7 @@ var idApiculteur = "{{ idApiculteur }}"
 
     
 
- location.reload();
+loadDataRuches();
 $('#addRuche').modal('hide'); 
     
 
@@ -442,17 +457,91 @@ var contenu = $("#inputIntervention").val();
 });
 
 
-
-
 </script> 
 
+<!--  SCRIPT AJAX FOR  DELETE A RUCHE -->
+
+<script type="text/javascript">
+
+function deleteRuche(idRuche){
+ 
+    $.confirm({
+      title: 'Confirmation',
+      content: 'Voulez-vous vraiment supprimer cette ruche ?',
+      buttons: {
+          Supprimer: function () {
+              $.ajax({
+                  type: "POST",
+                  url: "{{ path('delete_Ruche')}}",
+                  cache: false,
+                  global: false,
+                  data: {'idRuche': idRuche,},               
+                      success: function(data){
+                        $.alert('la ruche à été supprimée avec succès.');
+                         loadDataRuches();
+
+                      }
+                  }); 
+          },
+          Fermer: function () {
+           
+              $.alert('Suppression annulée.');
+          },
+
+      }
+  });
 
 
+}
+
+</script>
 
 
+<!-- END OF SCRIPT AJAX FOR  DELETE A RUCHE -->
 
 
+<script type="text/javascript">
+  
+function loadDataRuches(){
+  var idApi = "{{ idApiculteur }}";
 
+  $.ajax({
+      type: "POST",
+      url: "{{ path('liste_Ruche')}}",
+      cache: false,
+      global: false,
+      data: {'idApi': idApi,},
+      dataType :"json",              
+          success: function(data){
+              $('#myTable').DataTable().destroy();;
+
+              $('#myTable tbody').empty();
+
+              var tableRuche = $('#myTable').DataTable({
+              "ordering": false
+              });
+
+
+                  for (var i=0; i<data.length; i++) {
+
+                    
+  var Actions =' <center><button class="fa fa-trash-o" aria-hidden="true" onclick="deleteRuche('+data[i].id+')"></button>'
+ +' <button class="fa fa-info-circle" aria-hidden="true" onclick="showIntervention('+data[i].id+')" ></button></center>';
+                             tableRuche.rows.add(
+                             [[ data[i].nomRuche, data[i].position, Actions ],]
+                          ).draw();
+                          
+                  }
+
+           
+          
+          }
+
+      }); 
+
+}
+
+</script>
 
 
 
