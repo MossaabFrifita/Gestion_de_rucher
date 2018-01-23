@@ -22,4 +22,12 @@ liste_Ruche:
     path:     /listRuches
     defaults: {_controller: RucheBundle:ListeRuches:index }
 
+Porduction_Ruche:
+    path:     /Porduct_Ruche
+    defaults: {_controller: RucheBundle:AfficherProduction:index }
+
+Add_Production_Ruche:
+    path:     /Add_Porduct_Ruche
+    defaults: {_controller: RucheBundle:AjouterProduction:index }
+
 
